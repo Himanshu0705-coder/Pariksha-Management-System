@@ -3,6 +3,9 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 
+process.on('unhandledRejection', (e) => console.error('Unhandled rejection:', e));
+process.on('uncaughtException', (e) => console.error('Uncaught exception:', e));
+
 const app = express();
 
 app.use(cors());

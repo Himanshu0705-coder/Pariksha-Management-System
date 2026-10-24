@@ -73,8 +73,9 @@ router.put('/:id', requireAdmin, async (req, res) => {
 
 // Folder delete = folder + uske andar ke saare papers (files bhi) delete
 router.delete('/:id', requireAdmin, async (req, res) => {
-  const client = await pool.connect();
+  let client;
   try {
+    client = await pool.connect();
     await client.query('BEGIN');
     const files = await client.query('DELETE FROM exam_papers WHERE folder_id = $1 RETURNING file_path', [req.params.id]);
     const del = await client.query('DELETE FROM folders WHERE id = $1', [req.params.id]);
@@ -83,11 +84,11 @@ router.delete('/:id', requireAdmin, async (req, res) => {
     files.rows.forEach((r) => fs.unlink(path.join(upload.UPLOAD_DIR, r.file_path), () => {}));
     res.json({ message: 'Deleted', papersDeleted: files.rowCount });
   } catch (err) {
-    await client.query('ROLLBACK').catch(() => {});
+    if (client) await client.query('ROLLBACK').catch(() => {});
     console.error(err);
     res.status(500).json({ error: 'Server error' });
   } finally {
-    client.release();
+    if (client) client.release();
   }
 });
 

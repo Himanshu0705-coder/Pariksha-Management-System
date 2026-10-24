@@ -79,8 +79,9 @@ router.post('/', requireAdmin, (req, res) => {
       return res.status(400).json({ error: 'Department, subject and semester are required' });
     }
 
-    const client = await pool.connect();
+    let client;
     try {
+      client = await pool.connect();
       const dep = await client.query('SELECT id FROM departments WHERE id = $1', [departmentId]);
       if (!dep.rowCount) { cleanup(); return res.status(400).json({ error: 'Department not found' }); }
 
@@ -120,12 +121,12 @@ router.post('/', requireAdmin, (req, res) => {
       await client.query('COMMIT');
       res.status(201).json({ count: created.length, folderId: fid, papers: created.map(dto) });
     } catch (e) {
-      await client.query('ROLLBACK').catch(() => {});
+      if (client) await client.query('ROLLBACK').catch(() => {});
       console.error(e);
       cleanup();
-      res.status(500).json({ error: 'Server error' });
+      res.status(500).json({ error: 'Server error, please try again' });
     } finally {
-      client.release();
+      if (client) client.release();
     }
   });
 });

@@ -4,6 +4,7 @@ const multer = require('multer');
 
 const UPLOAD_DIR = process.env.UPLOAD_DIR || path.join(__dirname, '..', 'uploads');
 require('fs').mkdirSync(UPLOAD_DIR, { recursive: true });
+const ALLOWED = ['.pdf', '.doc', '.docx'];
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, UPLOAD_DIR),

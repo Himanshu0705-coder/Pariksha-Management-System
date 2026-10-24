@@ -1,10 +1,18 @@
 const { Pool } = require('pg');
 require('dotenv').config();
 
+const poolOptions = {
+  max: 5,
+  idleTimeoutMillis: 10000,       // idle connections close fast (Neon sleeps after 5 min idle)
+  connectionTimeoutMillis: 15000, // fail with an error instead of hanging while Neon wakes up
+  keepAlive: true
+};
+
 const pool = new Pool(
   process.env.DATABASE_URL
-    ? { connectionString: process.env.DATABASE_URL, ssl: { rejectUnauthorized: false } }
+    ? { ...poolOptions, connectionString: process.env.DATABASE_URL, ssl: { rejectUnauthorized: false } }
     : {
+        ...poolOptions,
         host: process.env.DB_HOST || 'localhost',
         port: Number(process.env.DB_PORT) || 5432,
         database: process.env.DB_NAME,
@@ -13,5 +21,6 @@ const pool = new Pool(
       }
 );
 
-pool.on('error', (err) => console.error('PostgreSQL pool error:', err));
+pool.on('error', (err) => console.error('PostgreSQL pool error:', err.message));
+
 module.exports = pool;
