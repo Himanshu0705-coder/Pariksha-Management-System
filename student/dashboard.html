@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student dashboard - Exam Paper Portal</title>
+    <link rel="icon" type="image/png" href="../images/sug-logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/app.css">
+</head>
+<body>
+<div class="mobile-overlay" id="mobileOverlay"></div>
+<div class="app student-layout">
+    <aside class="sidebar" id="mobileSidebar">
+        <button id="mobileCloseBtn" class="mobile-close-btn" aria-label="Close menu">&times;</button>
+        <div class="side-brand"><img src="../images/sug-logo.png" alt=""><b>Exam Paper Portal<small>Student</small></b></div>
+        <nav class="nav">
+            <a href="#" class="nav-item active" data-section="dashboard">Overview</a>
+            <a href="#" class="nav-item" data-section="papers">Browse papers</a>
+            <a href="#" class="nav-item" data-section="downloads">My downloads</a>
+            <a href="#" class="nav-item" data-section="profile">Profile</a>
+        </nav>
+        <div class="side-foot"><button id="logoutBtn" class="btn btn-block">Sign out</button></div>
+    </aside>
+
+    <div class="main">
+        <header class="topbar">
+            <div style="display:flex;align-items:center;gap:.75rem">
+                <button id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Open menu">&#9776;</button>
+                <h1 id="section-title">Overview</h1>
+            </div>
+            <div class="user"><span id="studentName">Student</span><span class="avatar" id="studentAvatar">S</span></div>
+        </header>
+
+        <div class="content">
+            <section id="dashboard" class="section active">
+                <h2 id="welcomeMsg">Welcome</h2>
+                <p class="sub">Here is what is available for you today.</p>
+                <div class="stats">
+                    <div class="stat"><h3 id="stat-available">0</h3><p>Papers available</p></div>
+                    <div class="stat"><h3 id="stat-downloads">0</h3><p>Your downloads</p></div>
+                    <div class="stat"><h3 id="stat-subjects">0</h3><p>Subjects covered</p></div>
+                    <div class="stat"><h3 id="stat-students">0</h3><p>Students on the portal</p></div>
+                </div>
+                <div class="cols">
+                    <div class="panel"><h3>Newly added papers</h3><div id="latestPapers"></div></div>
+                    <div class="panel">
+                        <h3>Your details</h3>
+                        <dl class="info-list">
+                            <dt>Registered on</dt><dd id="regDate">-</dd>
+                            <dt>Course</dt><dd id="regCourse">-</dd>
+                            <dt>Roll number</dt><dd id="regRoll">-</dd>
+                        </dl>
+                    </div>
+                </div>
+            </section>
+
+            <section id="papers" class="section">
+                <h2>Browse papers</h2>
+                <p class="sub" id="courseNote">You see papers for your own course only.</p>
+                <div class="toolbar">
+                    <input type="text" id="searchPaper" placeholder="Search papers">
+                    <select id="filterSubject">
+                        <option value="">Select Subject</option>
+                                        <option value="Mathematics">Mathematics</option>
+                                        <option value="Electronics">Electronics</option>
+                                        <option value="Physics">Physics</option>
+                                        <option value="Chemistry">Chemistry</option>
+                                        <option value="C">C</option>
+                                        <option value="Mechanics">Mechanics</option>
+                                        <option value="DS using C">DS using C</option>
+                                        <option value="English">English</option>
+                                        <option value="DBMS">DBMS</option>
+                                        <option value="Operating System">Operating System</option>
+                                        <option value="JAVA">JAVA</option>
+                                        <option value="DAA">DAA</option>
+                                        <option value="IWT">IWT</option>
+                                        <option value="Computer Network">Computer Network</option>
+                                        <option value="Automata">Automata</option>
+                                        <option value="Operation Research">Operation Research</option>
+                                        <option value="Software Engineering">Software Engineering</option>
+                                        <option value="Compiler Design">Compiler Design</option>
+                                        <option value="OOAD">OOAD</option>
+                                        <option value="Cryptography">Cryptography</option>
+                                        <option value="Cloud Computing">Cloud Computing</option>
+                                        <option value="Data Mining & Warehousing">Data mining & Warehousing</option>
+                                        <option value="Mobile Computing">Mobile Computing</option>
+                                        <option value="Computer Graphics">Computer Graphics</option>
+                                        <option value="AI">AI</option>
+                                        <option value="DISTRIBUTED COMPUTING SYSTEMS">DISTRIBUTED COMPUTING SYSTEMS</option>
+                                        <option value="ADVANCED COMPUTER SYSTEM ARCHITECTURE">ADVANCED COMPUTER SYSTEM ARCHITECTURE</option>
+                                        <option value="PYTHON PROGRAMMING">PYTHON PROGRAMMING</option>
+                                        <option value="STATISTICS">STATISTICS</option>
+                                        <option value="OTHERS">OTHERS</option>
+                    </select>
+                </div>
+                <div id="folderBar" class="chips"></div>
+                <div id="papersList" class="papers-grid"></div>
+            </section>
+
+            <section id="downloads" class="section">
+                <h2>My downloads</h2>
+                <p class="sub">Papers you have downloaded. Download again any time.</p>
+                <div class="panel"><div id="downloadsList"></div></div>
+            </section>
+
+            <section id="profile" class="section">
+                <h2>Profile</h2>
+                <p class="sub">Your account details.</p>
+                <div class="panel">
+                    <div class="profile-head"><span class="avatar" id="profileAvatar">S</span><h3 id="profileName" style="border:none;margin:0;padding:0"></h3></div>
+                    <dl class="info-list">
+                        <dt>Email</dt><dd id="profileEmail">-</dd>
+                        <dt>Roll number</dt><dd id="profileRoll">-</dd>
+                        <dt>Course</dt><dd id="profileCourse">-</dd>
+                        <dt>Registered on</dt><dd id="profileRegDate">-</dd>
+                        <dt>Papers downloaded</dt><dd id="profileDownloads">0</dd>
+                    </dl>
+                    <button class="btn btn-secondary" style="margin-top:1.25rem" onclick="changePassword()">Change password</button>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<div id="alertModal" class="modal">
+    <div class="modal-content">
+        <span class="close" role="button" aria-label="Close">&times;</span>
+        <p id="alertMessage"></p>
+        <button id="alertBtn" class="btn btn-primary">OK</button>
+    </div>
+</div>
+<div id="passwordModal" class="modal">
+    <div class="modal-content">
+        <span class="close" role="button" aria-label="Close">&times;</span>
+        <h3>Change password</h3>
+        <form id="passwordForm">
+            <div class="form-group"><label for="oldPassword">Current password</label><input type="password" id="oldPassword" autocomplete="current-password" required></div>
+            <div class="form-group"><label for="newPassword">New password</label><input type="password" id="newPassword" autocomplete="new-password" minlength="6" required></div>
+            <div class="form-group"><label for="confirmNewPassword">Confirm new password</label><input type="password" id="confirmNewPassword" autocomplete="new-password" required></div>
+            <button type="submit" class="btn btn-primary btn-block">Save password</button>
+        </form>
+    </div>
+</div>
+
+<script src="../js/utils.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/student-script.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    var menu = document.getElementById("mobileMenuBtn"), closeBtn = document.getElementById("mobileCloseBtn");
+    var sidebar = document.getElementById("mobileSidebar"), overlay = document.getElementById("mobileOverlay");
+    function open(v) { sidebar.classList.toggle("mobile-open", v); overlay.classList.toggle("show", v); }
+    menu.addEventListener("click", function () { open(true); });
+    closeBtn.addEventListener("click", function () { open(false); });
+    overlay.addEventListener("click", function () { open(false); });
+    document.querySelectorAll(".nav-item").forEach(function (n) { n.addEventListener("click", function () { open(false); }); });
+});
+</script>
+</body>
+</html>

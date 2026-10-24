@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Exam Paper System</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/admin-style.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <div class="login-header">
+                <h1>🔐 Admin Login</h1>
+                <p>Exam Paper Management System</p>
+            </div>
+
+            <form id="adminLoginForm" class="login-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter admin username" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter admin password" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">Login</button>
+            </form>
+
+            <div class="login-info">
+                <h3>Demo Credentials</h3>
+                <p><strong>Username:</strong> admin</p>
+                <p><strong>Password:</strong> admin123</p>
+            </div>
+
+            <div class="login-footer">
+                <a href="../index.html" class="btn btn-secondary btn-block">Back to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/utils.js"></script>
+    <script src="../js/admin-script.js"></script>
+    <script>
+        // Initialize admin credentials if not exists
+        if (!localStorage.getItem('admin')) {
+            localStorage.setItem('admin', JSON.stringify({
+                username: 'admin',
+                password: 'admin123'
+            }));
+        }
+
+        document.getElementById('adminLoginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const admin = JSON.parse(localStorage.getItem('admin'));
+
+            if (username === admin.username && password === admin.password) {
+                localStorage.setItem('adminLoggedIn', 'true');
+                showAlert('Login successful! Redirecting to dashboard...', 'success');
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1500);
+            } else {
+                showAlert('Invalid username or password!', 'error');
+            }
+        });
+    </script>
+</body>
+</html>

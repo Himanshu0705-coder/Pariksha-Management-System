@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Exam Paper System</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/admin-style.css">
+</head>
+<body>
+<button id="mobileMenuBtn" class="mobile-menu-btn">☰</button>
+<div class="mobile-overlay" id="mobileOverlay"></div>
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="mobileSidebar"><button id="mobileCloseBtn" class="mobile-close-btn">✕</button>
+            <div class="sidebar-header">
+                <h2>📚 Exam Manager</h2>
+                <p>Admin Panel</p>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#dashboard" class="nav-item active" data-section="dashboard">
+                    <span>📊</span> Dashboard
+                </a>
+                <a href="#papers" class="nav-item" data-section="papers">
+                    <span>📄</span> Manage Papers
+                </a>
+                <a href="#students" class="nav-item" data-section="students">
+                    <span>👥</span> View Students
+                </a>
+                <a href="#settings" class="nav-item" data-section="settings">
+                    <span>⚙️</span> Settings
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="logoutBtn" class="btn btn-danger btn-block">
+                    <span>🚪</span> Logout
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="admin-header">
+                <div class="header-left">
+                    <h1 id="section-title">Dashboard</h1>
+                </div>
+                <div class="header-right">
+                    <div class="admin-info">
+                        <span id="adminName">Admin</span>
+                        <div class="avatar">A</div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Sections -->
+            <div class="content-area">
+                <!-- Dashboard Section -->
+                <section id="dashboard" class="section active">
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <h3>Total Students</h3>
+                            <p class="stat-number" id="stat-students">0</p>
+                        </div>
+                        <div class="stat-box">
+                            <h3>Total Papers</h3>
+                            <p class="stat-number" id="stat-papers">0</p>
+                        </div>
+                        <div class="stat-box">
+                            <h3>Total Downloads</h3>
+                            <p class="stat-number" id="stat-downloads">0</p>
+                        </div>
+                        <div class="stat-box">
+                            <h3>Active Users</h3>
+                            <p class="stat-number" id="stat-active">0</p>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-cards">
+                        <div class="card">
+                            <h2>Recent Registrations</h2>
+                            <div id="recentStudents" class="students-list">
+                                <p class="empty-state">No recent registrations</p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <h2>Recent Papers Uploaded</h2>
+                            <div id="recentPapers" class="papers-list">
+                                <p class="empty-state">No papers uploaded yet</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Manage Papers Section -->
+                <section id="papers" class="section">
+                    <div class="papers-container">
+                        <div class="card">
+                            <h2>Upload New Exam Paper</h2>
+                            <form id="uploadForm" class="upload-form">
+                                <div class="form-group">
+                                    <label for="paperName">Paper Name</label>
+                                    <input type="text" id="paperName" placeholder="e.g., Mathematics Final 2024" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="subject">Subject</label>
+                                    <select id="subject" required>
+                                        <option value="">Select Subject</option>
+                                        <option value="Mathematics">Mathematics</option>
+                                        <option value="Electronics">Electronics</option>
+                                        <option value="Physics">Physics</option>
+                                        <option value="Chemistry">Chemistry</option>
+                                        <option value="C">C</option>
+                                        <option value="Mechanics">Mechanics</option>
+                                        <option value="DS using C">DS using C</option>
+                                        <option value="English">English</option>
+                                        <option value="DBMS">DBMS</option>
+                                        <option value="Operating System">Operating System</option>
+                                        <option value="JAVA">JAVA</option>
+                                        <option value="DAA">DAA</option>
+                                        <option value="IWT">IWT</option>
+                                        <option value="Computer Network">Computer Network</option>
+                                        <option value="Automata">Automata</option>
+                                        <option value="Operation Research">Operation Research</option>
+                                        <option value="Software Engineering">Software Engineering</option>
+                                        <option value="Compiler Design">Compiler Design</option>
+                                        <option value="OOAD">OOAD</option>
+                                        <option value="Cryptography">Cryptography</option>
+                                        <option value="Cloud Computing">Cloud Computing</option>
+                                        <option value="Data Mining & Warehousing">Data mining & Warehousing</option>
+                                        <option value="Mobile Computing">Mobile Computing</option>
+                                        <option value="Computer Graphics">Computer Graphics</option>
+                                        <option value="AI">AI</option>
+                                        <option value="DISTRIBUTED COMPUTING SYSTEMS">DISTRIBUTED COMPUTING SYSTEMS</option>
+                                        <option value="ADVANCED COMPUTER SYSTEM ARCHITECTURE">ADVANCED COMPUTER SYSTEM ARCHITECTURE</option>
+                                        <option value="PYTHON PROGRAMMING">PYTHON PROGRAMMING</option>
+                                        <option value="STATISTICS">STATISTICS</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="semester">Semester/Term</label>
+                                    <input type="text" id="semester" placeholder="e.g., Sem 1 2024" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="description">Description</label>
+                                    <textarea id="description" placeholder="Enter paper description" rows="3"></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="paperFile">Upload File</label>
+                                    <input type="file" id="paperFile" accept=".pdf,.doc,.docx" required>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary btn-block">Upload Paper</button>
+                            </form>
+                        </div>
+
+                        <div class="card">
+                            <h2>All Papers</h2>
+                            <div id="papersList" class="papers-grid">
+                                <p class="empty-state">No papers uploaded yet</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- View Students Section -->
+                <section id="students" class="section">
+                    <div class="card">
+                        <h2>Registered Students</h2>
+                        <div class="students-search">
+                            <input type="text" id="searchStudent" placeholder="Search by email or name...">
+                        </div>
+                        <div id="studentsList" class="students-table">
+                            <p class="empty-state">No students registered yet</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Settings Section -->
+                <section id="settings" class="section">
+                    <div class="card">
+                        <h2>Admin Settings</h2>
+                        <div class="settings-form">
+                            <div class="form-group">
+                                <label for="adminPassword">Change Admin Password</label>
+                                <input type="password" id="adminPassword" placeholder="Enter new password">
+                                <button type="button" class="btn btn-secondary" onclick="changeAdminPassword()">Update Password</button>
+                            </div>
+                            <hr>
+                            <h3>System Info</h3>
+                            <p><strong>Total Students:</strong> <span id="info-students">0</span></p>
+                            <p><strong>Total Papers:</strong> <span id="info-papers">0</span></p>
+                            <p><strong>Last Updated:</strong> <span id="info-updated">-</span></p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Alert Modal -->
+    <div id="alertModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="alertMessage"></p>
+            <button id="alertBtn" class="btn btn-primary">OK</button>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <h2>Confirm Delete</h2>
+            <p id="confirmMessage">Are you sure you want to delete this item?</p>
+            <div class="button-group">
+                <button id="confirmYes" class="btn btn-danger">Yes, Delete</button>
+                <button id="confirmNo" class="btn btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/utils.js"></script>
+    <script src="../js/admin-script.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+const menu=document.getElementById('mobileMenuBtn');
+const closeBtn=document.getElementById('mobileCloseBtn');
+const sidebar=document.getElementById('mobileSidebar');
+const overlay=document.getElementById('mobileOverlay');
+
+if(menu){
+menu.addEventListener('click',()=>{
+sidebar.classList.add('mobile-open');
+overlay.classList.add('show');
+});
+}
+if(closeBtn){
+closeBtn.addEventListener('click',()=>{
+sidebar.classList.remove('mobile-open');
+overlay.classList.remove('show');
+});
+}
+if(overlay){
+overlay.addEventListener('click',()=>{
+sidebar.classList.remove('mobile-open');
+overlay.classList.remove('show');
+});
+}
+});
+</script>
+</body>
+</html>

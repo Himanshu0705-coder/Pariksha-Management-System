@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create student account - Exam Paper Portal</title>
+    <link rel="icon" type="image/png" href="../images/sug-logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/app.css">
+</head>
+<body>
+    <main class="auth">
+        <aside class="auth-side">
+            <img src="../images/sug-logo.png" alt="Shobhit University logo">
+            <div>
+                <h2>Create your account in a minute.</h2>
+                <p>You only need your name, email, roll number and course. A welcome email confirms your registration.</p>
+            </div>
+            <a href="../index.html">Back to home</a>
+        </aside>
+
+        <section class="auth-main">
+            <div class="auth-card">
+                <h1>Create student account</h1>
+                <p>Fill in your details to start downloading papers.</p>
+                <form id="registrationForm">
+                    <div class="form-group">
+                        <label for="fullName">Full name</label>
+                        <input type="text" id="fullName" name="fullName" autocomplete="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email address</label>
+                        <input type="email" id="email" name="email" autocomplete="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="rollNo">Roll number</label>
+                        <input type="text" id="rollNo" name="rollNo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="course">Course</label>
+                        <select id="course" name="course" required>
+                            <option value="">Loading courses...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="regPassword">Password</label>
+                        <input type="password" id="regPassword" name="regPassword" autocomplete="new-password" minlength="6" required>
+                        <span class="hint">At least 6 characters.</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm password</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" autocomplete="new-password" required>
+                    </div>
+                    <div class="form-group checkbox">
+                        <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+                        <label for="agreeTerms">I will use these papers for study only</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Create account</button>
+                </form>
+                <div class="auth-links">
+                    <span>Already registered? <a href="login.html">Sign in</a></span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="alertModal" class="modal">
+        <div class="modal-content">
+            <span class="close" role="button" aria-label="Close">&times;</span>
+            <p id="alertMessage"></p>
+            <button id="alertBtn" class="btn btn-primary">OK</button>
+        </div>
+    </div>
+
+    <script src="../js/utils.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/email.js"></script>
+    <script>
+        (async () => {
+            const sel = document.getElementById('course');
+            try {
+                const list = await (await fetch('/api/departments')).json();
+                sel.innerHTML = '<option value="">Select your course</option>' +
+                    list.map(d => `<option value="${esc(d.name)}">${esc(d.name)}</option>`).join('');
+            } catch (e) {
+                sel.innerHTML = '<option value="">Could not load courses. Refresh the page.</option>';
+            }
+        })();
+        document.getElementById('registrationForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const rollNo = document.getElementById('rollNo').value;
+            const course = document.getElementById('course').value;
+            const password = document.getElementById('regPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (password !== confirmPassword) { showAlert('Passwords do not match.', 'error'); return; }
+            if (password.length < 6) { showAlert('Password must be at least 6 characters long.', 'error'); return; }
+
+            try {
+                await api('/auth/student/register', { method: 'POST', body: { fullName, email, rollNo, course, password } });
+                try { await sendWelcomeEmail(fullName, email); } catch (_) {}
+                showAlert('Account created. Redirecting you to sign in.', 'success');
+                setTimeout(() => { window.location.href = 'login.html'; }, 1800);
+            } catch (err) {
+                showAlert(err.message, 'error');
+            }
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>emailjs.init("YtffmWJVlZzyLK8FQ");</script>
+</body>
+</html>

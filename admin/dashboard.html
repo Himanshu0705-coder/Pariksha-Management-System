@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin dashboard - Exam Paper Portal</title>
+    <link rel="icon" type="image/png" href="../images/sug-logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/app.css">
+</head>
+<body>
+<div class="mobile-overlay" id="mobileOverlay"></div>
+<div class="app admin-layout">
+    <aside class="sidebar" id="mobileSidebar">
+        <button id="mobileCloseBtn" class="mobile-close-btn" aria-label="Close menu">&times;</button>
+        <div class="side-brand"><img src="../images/sug-logo.png" alt=""><b>Exam Paper Portal<small>Admin</small></b></div>
+        <nav class="nav">
+            <a href="#" class="nav-item active" data-section="dashboard">Overview</a>
+            <a href="#" class="nav-item" data-section="papers">Exam papers</a>
+            <a href="#" class="nav-item" data-section="departments">Departments</a>
+            <a href="#" class="nav-item" data-section="students">Students</a>
+            <a href="#" class="nav-item" data-section="settings">Settings</a>
+        </nav>
+        <div class="side-foot"><button id="logoutBtn" class="btn btn-block">Sign out</button></div>
+    </aside>
+
+    <div class="main">
+        <header class="topbar">
+            <div style="display:flex;align-items:center;gap:.75rem">
+                <button id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Open menu">&#9776;</button>
+                <h1 id="section-title">Overview</h1>
+            </div>
+            <div class="user"><span id="adminName">Admin</span><span class="avatar">A</span></div>
+        </header>
+
+        <div class="content">
+            <section id="dashboard" class="section active">
+                <div class="stats">
+                    <div class="stat"><h3 id="stat-students">0</h3><p>Registered students</p></div>
+                    <div class="stat"><h3 id="stat-papers">0</h3><p>Papers uploaded</p></div>
+                    <div class="stat"><h3 id="stat-downloads">0</h3><p>Total downloads</p></div>
+                    <div class="stat"><h3 id="stat-active">0</h3><p>Active students</p></div>
+                </div>
+                <div class="cols">
+                    <div class="panel"><h3>Latest papers</h3><div id="recentPapers"></div></div>
+                    <div class="panel"><h3>New students</h3><div id="recentStudents"></div></div>
+                </div>
+            </section>
+
+            <section id="papers" class="section">
+                <h2>Upload papers</h2>
+                <p class="sub">Pick the department first. Students of that department are the only ones who can see these papers.</p>
+                <form id="uploadForm" class="panel">
+                    <div class="cols">
+                        <div class="form-group"><label for="uploadDepartment">Department</label><select id="uploadDepartment" required></select></div>
+                        <div class="form-group"><label for="uploadFolder">Put in folder</label><select id="uploadFolder"></select></div>
+                        <div class="form-group"><label for="subject">Subject</label>
+                            <select id="subject" required>
+                                        <option value="">Select Subject</option>
+                                        <option value="Mathematics">Mathematics</option>
+                                        <option value="Electronics">Electronics</option>
+                                        <option value="Physics">Physics</option>
+                                        <option value="Chemistry">Chemistry</option>
+                                        <option value="C">C</option>
+                                        <option value="Mechanics">Mechanics</option>
+                                        <option value="DS using C">DS using C</option>
+                                        <option value="English">English</option>
+                                        <option value="DBMS">DBMS</option>
+                                        <option value="Operating System">Operating System</option>
+                                        <option value="JAVA">JAVA</option>
+                                        <option value="DAA">DAA</option>
+                                        <option value="IWT">IWT</option>
+                                        <option value="Computer Network">Computer Network</option>
+                                        <option value="Automata">Automata</option>
+                                        <option value="Operation Research">Operation Research</option>
+                                        <option value="Software Engineering">Software Engineering</option>
+                                        <option value="Compiler Design">Compiler Design</option>
+                                        <option value="OOAD">OOAD</option>
+                                        <option value="Cryptography">Cryptography</option>
+                                        <option value="Cloud Computing">Cloud Computing</option>
+                                        <option value="Data Mining & Warehousing">Data mining & Warehousing</option>
+                                        <option value="Mobile Computing">Mobile Computing</option>
+                                        <option value="Computer Graphics">Computer Graphics</option>
+                                        <option value="AI">AI</option>
+                                        <option value="DISTRIBUTED COMPUTING SYSTEMS">DISTRIBUTED COMPUTING SYSTEMS</option>
+                                        <option value="ADVANCED COMPUTER SYSTEM ARCHITECTURE">ADVANCED COMPUTER SYSTEM ARCHITECTURE</option>
+                                        <option value="PYTHON PROGRAMMING">PYTHON PROGRAMMING</option>
+                                        <option value="STATISTICS">STATISTICS</option>
+                                    </select>
+                        </div>
+                        <div class="form-group"><label for="semester">Semester</label><input type="text" id="semester" placeholder="Sem 1 2024" required></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>What do you want to upload?</label>
+                        <div class="radio-row">
+                            <label class="radio"><input type="radio" name="uploadMode" value="files" checked> One or more files</label>
+                            <label class="radio"><input type="radio" name="uploadMode" value="folder"> A whole folder from my computer</label>
+                        </div>
+                    </div>
+                    <div class="form-group" id="filesBox">
+                        <label for="paperFile">Files (PDF, DOC or DOCX, up to 20 MB each)</label>
+                        <input type="file" id="paperFile" accept=".pdf,.doc,.docx" multiple>
+                    </div>
+                    <div class="form-group" id="folderBox" hidden>
+                        <label for="paperFolder">Choose a folder</label>
+                        <input type="file" id="paperFolder" webkitdirectory multiple>
+                        <span class="hint">A folder with the same name is created in this department. Only PDF, DOC and DOCX files inside it are uploaded, and sub-folders are merged into one.</span>
+                    </div>
+                    <div class="form-group" id="nameBox">
+                        <label for="paperName">Paper name</label>
+                        <input type="text" id="paperName" placeholder="Used when you upload a single file. Otherwise the file name is used.">
+                    </div>
+                    <div class="form-group"><label for="description">Description</label><textarea id="description" rows="2" placeholder="Syllabus covered, paper pattern, anything students should know"></textarea></div>
+                    <button type="submit" class="btn btn-primary" id="uploadBtn">Upload</button>
+                </form>
+
+                <h2 style="margin-top:2rem">Library</h2>
+                <p class="sub">Filter by department, open a folder, then edit or delete papers.</p>
+                <div class="toolbar">
+                    <select id="libDepartment"></select>
+                    <input type="text" id="libSearch" placeholder="Search papers">
+                    <button type="button" class="btn btn-secondary" id="newFolderBtn">New folder</button>
+                </div>
+                <div id="folderBar" class="chips"></div>
+                <div id="folderActions" class="folder-actions" hidden></div>
+                <div id="papersList" class="papers-grid"></div>
+            </section>
+
+            <section id="departments" class="section">
+                <h2>Departments</h2>
+                <p class="sub">Students choose one of these when they register, and see only the papers uploaded for it.</p>
+                <form id="departmentForm" class="inline-form">
+                    <input type="text" id="departmentName" placeholder="For example, B.Tech Data Science" required>
+                    <button type="submit" class="btn btn-primary">Add department</button>
+                </form>
+                <div class="panel"><div id="departmentsList"></div></div>
+            </section>
+
+            <section id="students" class="section">
+                <h2>Students</h2>
+                <p class="sub">Everyone who has registered on the portal.</p>
+                <div class="toolbar"><input type="text" id="searchStudent" placeholder="Search by name or email"></div>
+                <div id="studentsList" class="table-wrap"></div>
+            </section>
+
+            <section id="settings" class="section">
+                <h2>Settings</h2>
+                <p class="sub">Change your password and check what is stored.</p>
+                <div class="cols">
+                    <div class="panel">
+                        <h3>Change password</h3>
+                        <div class="form-group"><label for="adminPassword">New password</label><input type="password" id="adminPassword" autocomplete="new-password" placeholder="At least 6 characters"></div>
+                        <button type="button" class="btn btn-primary" onclick="changeAdminPassword()">Save password</button>
+                    </div>
+                    <div class="panel">
+                        <h3>System</h3>
+                        <dl class="info-list">
+                            <dt>Students</dt><dd id="info-students">0</dd>
+                            <dt>Papers</dt><dd id="info-papers">0</dd>
+                            <dt>Last checked</dt><dd id="info-updated">-</dd>
+                            <dt>Database</dt><dd>PostgreSQL</dd>
+                        </dl>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<div id="alertModal" class="modal">
+    <div class="modal-content">
+        <span class="close" role="button" aria-label="Close">&times;</span>
+        <p id="alertMessage"></p>
+        <button id="alertBtn" class="btn btn-primary">OK</button>
+    </div>
+</div>
+<div id="confirmModal" class="modal">
+    <div class="modal-content">
+        <span class="close" role="button" aria-label="Close">&times;</span>
+        <p id="confirmMessage"></p>
+        <div class="modal-actions">
+            <button id="confirmYes" class="btn btn-danger">Delete</button>
+            <button id="confirmNo" class="btn btn-secondary">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<div id="folderModal" class="modal">
+    <div class="modal-content">
+        <span class="close" role="button" aria-label="Close">&times;</span>
+        <h3 id="folderModalTitle">New folder</h3>
+        <form id="folderForm">
+            <div class="form-group"><label for="folderDepartment">Department</label><select id="folderDepartment" required></select></div>
+            <div class="form-group"><label for="folderName">Folder name</label><input type="text" id="folderName" placeholder="For example, Semester 3 papers" required></div>
+            <button type="submit" class="btn btn-primary btn-block">Save folder</button>
+        </form>
+    </div>
+</div>
+<div id="editPaperModal" class="modal">
+    <div class="modal-content wide">
+        <span class="close" role="button" aria-label="Close">&times;</span>
+        <h3>Edit paper</h3>
+        <form id="editPaperForm">
+            <div class="form-group"><label for="editName">Paper name</label><input type="text" id="editName" required></div>
+            <div class="cols">
+                <div class="form-group"><label for="editDepartment">Department</label><select id="editDepartment" required></select></div>
+                <div class="form-group"><label for="editFolder">Folder</label><select id="editFolder"></select></div>
+                <div class="form-group"><label for="editSubject">Subject</label><input type="text" id="editSubject" required></div>
+                <div class="form-group"><label for="editSemester">Semester</label><input type="text" id="editSemester" required></div>
+            </div>
+            <div class="form-group"><label for="editDescription">Description</label><textarea id="editDescription" rows="3"></textarea></div>
+            <button type="submit" class="btn btn-primary btn-block">Save changes</button>
+        </form>
+    </div>
+</div>
+
+<script src="../js/utils.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/admin-script.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    var menu = document.getElementById("mobileMenuBtn"), closeBtn = document.getElementById("mobileCloseBtn");
+    var sidebar = document.getElementById("mobileSidebar"), overlay = document.getElementById("mobileOverlay");
+    function open(v) { sidebar.classList.toggle("mobile-open", v); overlay.classList.toggle("show", v); }
+    menu.addEventListener("click", function () { open(true); });
+    closeBtn.addEventListener("click", function () { open(false); });
+    overlay.addEventListener("click", function () { open(false); });
+    document.querySelectorAll(".nav-item").forEach(function (n) { n.addEventListener("click", function () { open(false); }); });
+});
+</script>
+</body>
+</html>

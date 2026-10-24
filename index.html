@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Paper Portal - Shobhit University</title>
+    <link rel="icon" type="image/png" href="images/sug-logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+    <header class="site-head">
+        <a class="brand" href="index.html"><img src="images/sug-logo.png" alt="Shobhit University logo">Shobhit University</a>
+        <a class="btn btn-secondary" href="admin/login.html">Admin sign in</a>
+    </header>
+
+    <main class="hero">
+        <div>
+            <h1>Every past paper your course needs, ready to download.</h1>
+            <p class="lead">Register with your roll number, find your subject, and download the exam paper as a PDF or document. New papers appear the moment the exam cell uploads them.</p>
+            <div class="hero-actions">
+                <a class="btn btn-accent" href="student/register.html">Create student account</a>
+                <a class="btn btn-secondary" href="student/login.html">Student sign in</a>
+            </div>
+            <div class="counts">
+                <div><strong id="total-papers">0</strong><span>Exam papers available</span></div>
+                <div><strong id="total-students">0</strong><span>Students registered</span></div>
+            </div>
+        </div>
+
+        <aside class="index" aria-label="Subjects">
+            <h2>Find papers by subject</h2>
+            <ul>
+                <li>Data Science <span>PDF, DOC</span></li>
+                <li>Web Development <span>PDF, DOC</span></li>
+                <li>Data Analyst <span>PDF, DOC</span></li>
+                <li>Artificial Intelligence <span>PDF, DOC</span></li>
+                <li>Machine Learning <span>PDF, DOC</span></li>
+                <li>Automation Theory <span>PDF, DOC</span></li>
+                <li>Web Scraping <span>PDF, DOC</span></li>
+                <li>Quality Assurance <span>PDF, DOC</span></li>
+            </ul>
+        </aside>
+        
+    </main>
+
+    <footer class="site-foot"><span>Shobhit University, Exam Paper Portal</span><span>Sign in to download papers</span></footer>
+
+    <script>
+        window.addEventListener('load', async () => {
+            try {
+                const data = await (await fetch('/api/public-stats')).json();
+                document.getElementById('total-students').textContent = data.students;
+                document.getElementById('total-papers').textContent = data.papers;
+            } catch (e) { console.warn('Stats load failed', e); }
+        });
+    </script>
+</body>
+</html>

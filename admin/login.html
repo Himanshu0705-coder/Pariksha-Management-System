@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin sign in - Exam Paper Portal</title>
+    <link rel="icon" type="image/png" href="../images/sug-logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/app.css">
+</head>
+<body>
+    <main class="auth">
+        <aside class="auth-side">
+            <img src="../images/sug-logo.png" alt="Shobhit University logo">
+            <div>
+                <h2>Upload papers. Students do the rest.</h2>
+                <p>Add exam papers by subject and semester, and manage the students who can access them.</p>
+            </div>
+            <a href="../index.html">Back to home</a>
+        </aside>
+
+        <section class="auth-main">
+            <div class="auth-card">
+                <h1>Admin sign in</h1>
+                <p>Use the admin account created during setup.</p>
+                <form id="adminLoginForm">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" autocomplete="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" autocomplete="current-password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <div id="alertModal" class="modal">
+        <div class="modal-content">
+            <span class="close" role="button" aria-label="Close">&times;</span>
+            <p id="alertMessage"></p>
+            <button id="alertBtn" class="btn btn-primary">OK</button>
+        </div>
+    </div>
+
+    <script src="../js/utils.js"></script>
+    <script src="../js/api.js"></script>
+    <script>
+        document.getElementById('adminLoginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            try {
+                const data = await api('/auth/admin/login', { method: 'POST', body: { username, password } });
+                Auth.save(data.token, 'admin', data.admin);
+                window.location.href = 'dashboard.html';
+            } catch (err) {
+                showAlert(err.message, 'error');
+            }
+        });
+    </script>
+</body>
+</html>

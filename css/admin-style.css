@@ -1,0 +1,642 @@
+/* ============================
+   ADMIN DASHBOARD STYLES
+   ============================ */
+
+.admin-layout {
+    display: block;
+    min-height: 100vh;
+    background-color: var(--light-bg);
+}
+
+.sidebar {
+    background: linear-gradient(180deg, var(--dark-bg), #111827);
+    color: white;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow);
+    position: fixed;
+    height: 100vh;
+    width: 250px;
+    overflow-y: auto;
+    z-index: 100;
+    left: 0;
+    top: 0;
+}
+
+.sidebar-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 1.5rem;
+}
+
+.sidebar-header h2 {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.sidebar-header p {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.sidebar-nav {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.nav-item {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    color: rgba(255, 255, 255, 0.7);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.nav-item:hover {
+    background-color: rgba(99, 102, 241, 0.2);
+    color: white;
+    transform: translateX(5px);
+}
+
+.nav-item.active {
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    color: white;
+}
+
+.nav-item span {
+    font-size: 1.2rem;
+}
+
+.sidebar-footer {
+    border-top: 2px solid rgba(255, 255, 255, 0.1);
+    padding-top: 1.5rem;
+}
+
+.main-content {
+    margin-left: 250px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.admin-header {
+    background: white;
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow);
+    margin-bottom: 2rem;
+}
+
+.admin-header h1 {
+    color: var(--primary-color);
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+.admin-info,
+.student-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.admin-info span,
+.student-info span {
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.content-area {
+    padding: 0 2rem 2rem 2rem;
+    flex: 1;
+}
+
+.section {
+    display: none;
+    animation: fadeIn 0.4s ease;
+}
+
+.section.active {
+    display: block;
+}
+
+/* ============================
+   DASHBOARD STATS
+   ============================ */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-box {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    box-shadow: var(--shadow);
+    border-left: 4px solid var(--primary-color);
+}
+
+.stat-box h3 {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin: 0;
+}
+
+/* ============================
+   DASHBOARD CARDS
+   ============================ */
+
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+}
+
+.students-list,
+.papers-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.student-item,
+.paper-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: var(--light-bg);
+    border-radius: 0.5rem;
+    border-left: 3px solid var(--primary-color);
+}
+
+.student-item-info,
+.paper-item-info {
+    flex: 1;
+}
+
+.student-name,
+.paper-name {
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.student-email,
+.paper-subject {
+    font-size: 0.85rem;
+    color: var(--text-light);
+}
+
+/* ============================
+   PAPERS MANAGEMENT
+   ============================ */
+
+.papers-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.upload-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.papers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.paper-card {
+    background: white;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.paper-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.paper-header {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.paper-icon {
+    font-size: 2rem;
+}
+
+.paper-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.action-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: transform 0.2s ease;
+}
+
+.action-btn:hover {
+    transform: scale(1.2);
+}
+
+.paper-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-dark);
+}
+
+.paper-meta {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+}
+
+.paper-description {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-bottom: 1rem;
+    flex: 1;
+}
+
+.paper-footer {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.paper-footer .btn {
+    flex: 1;
+    padding: 0.5rem;
+    font-size: 0.85rem;
+    margin-top: 0;
+}
+
+/* ============================
+   STUDENTS TABLE
+   ============================ */
+
+.students-search {
+    margin-bottom: 1.5rem;
+}
+
+.students-search input {
+    width: 100%;
+    max-width: 400px;
+}
+
+.students-table {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table thead {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+table th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+}
+
+table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+table tbody tr:hover {
+    background-color: var(--light-bg);
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.status-active {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.status-inactive {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+/* ============================
+   SETTINGS
+   ============================ */
+
+.settings-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.settings-form h3 {
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.settings-form p {
+    margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* ============================
+   RESPONSIVE DESIGN
+   ============================ */
+
+@media (max-width: 1024px) {
+    .sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        overflow-y: visible;
+        z-index: 10;
+    }
+
+    .sidebar-header {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border: none;
+        min-width: 150px;
+    }
+
+    .sidebar-nav {
+        flex-direction: row;
+        flex: 1;
+        gap: 0.25rem;
+        margin: 0 1rem;
+    }
+
+    .nav-item {
+        padding: 0.75rem;
+        font-size: 0.9rem;
+    }
+
+    .nav-item span {
+        font-size: 1rem;
+    }
+
+    .sidebar-footer {
+        border: none;
+        padding: 0;
+        margin-left: auto;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    .admin-header {
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .dashboard-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .papers-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        flex-direction: column;
+        padding: 1rem;
+    }
+
+    .sidebar-header {
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar-nav {
+        flex-direction: column;
+        gap: 0.5rem;
+        margin: 0;
+    }
+
+    .admin-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .content-area {
+        padding: 0 1rem 1rem 1rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+    }
+
+    .papers-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .paper-card {
+        padding: 1rem;
+    }
+
+    .dashboard-cards {
+        grid-template-columns: 1fr;
+    }
+
+    table {
+        font-size: 0.9rem;
+    }
+
+    table th,
+    table td {
+        padding: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .sidebar {
+        flex-direction: column;
+        padding: 0.75rem;
+    }
+
+    .sidebar-header h2 {
+        font-size: 1.2rem;
+    }
+
+    .sidebar-nav {
+        gap: 0.25rem;
+    }
+
+    .nav-item {
+        padding: 0.5rem;
+        font-size: 0.8rem;
+    }
+
+    .admin-header {
+        padding: 1rem;
+    }
+
+    .admin-header h1 {
+        font-size: 1.3rem;
+    }
+
+    .content-area {
+        padding: 0.75rem;
+    }
+
+    .card {
+        padding: 1rem;
+    }
+
+    .stat-box {
+        padding: 1rem;
+    }
+
+    .stat-number {
+        font-size: 2rem;
+    }
+
+    .papers-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .paper-footer .btn {
+        padding: 0.4rem;
+        font-size: 0.75rem;
+    }
+}
+
+
+.mobile-menu-btn{
+display:none;
+position:fixed;
+top:12px;
+right:12px;
+left:auto;
+z-index:2001;
+background:#111;
+color:#fff;
+border:none;
+padding:10px 12px;
+font-size:22px;
+border-radius:6px;
+}
+
+.mobile-close-btn{
+display:none;
+}
+
+.mobile-overlay{
+display:none;
+}
+
+@media (max-width:768px){
+.mobile-menu-btn{display:block;}
+
+.mobile-overlay.show{
+display:block;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.55);
+z-index:1998;
+}
+
+.sidebar{
+position:fixed !important;
+right:0;
+left:auto;
+top:0;
+height:100vh;
+width:280px;
+background:#18181b !important;
+transform:translateX(100%);
+transition:transform .3s ease;
+z-index:1999;
+overflow-y:auto;
+}
+
+.sidebar.mobile-open{
+transform:translateX(0);
+}
+
+.mobile-close-btn{
+display:block;
+background:none;
+border:none;
+color:#fff;
+font-size:24px;
+padding:12px;
+cursor:pointer;
+}
+
+.main-content,
+.content,
+.dashboard-content{
+margin-left:0 !important;
+width:100% !important;
+}
+}

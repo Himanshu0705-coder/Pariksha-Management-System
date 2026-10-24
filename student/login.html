@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student sign in - Exam Paper Portal</title>
+    <link rel="icon" type="image/png" href="../images/sug-logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/app.css">
+</head>
+<body>
+    <main class="auth">
+        <aside class="auth-side">
+            <img src="../images/sug-logo.png" alt="Shobhit University logo">
+            <div>
+                <h2>Your exam papers, one sign in away.</h2>
+                <p>Search by subject, download what you need, and find everything you downloaded before.</p>
+            </div>
+            <a href="../index.html">Back to home</a>
+        </aside>
+
+        <section class="auth-main">
+            <div class="auth-card">
+                <h1>Student sign in</h1>
+                <p>Enter the email and password you registered with.</p>
+                <form id="studentLoginForm">
+                    <div class="form-group">
+                        <label for="loginEmail">Email address</label>
+                        <input type="email" id="loginEmail" autocomplete="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" autocomplete="current-password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+                </form>
+                <div class="auth-links">
+                    <span>New here? <a href="register.html">Create a student account</a></span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="alertModal" class="modal">
+        <div class="modal-content">
+            <span class="close" role="button" aria-label="Close">&times;</span>
+            <p id="alertMessage"></p>
+            <button id="alertBtn" class="btn btn-primary">OK</button>
+        </div>
+    </div>
+
+    <script src="../js/utils.js"></script>
+    <script src="../js/api.js"></script>
+    <script>
+        document.getElementById('studentLoginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            try {
+                const data = await api('/auth/student/login', { method: 'POST', body: { email, password } });
+                Auth.save(data.token, 'student', data.student);
+                window.location.href = 'dashboard.html';
+            } catch (err) {
+                showAlert(err.message, 'error');
+            }
+        });
+    </script>
+</body>
+</html>
