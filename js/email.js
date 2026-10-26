@@ -17,7 +17,7 @@ async function sendWelcomeEmail(studentName, studentEmail, studentPassword) {
         // Attempt to send via EmailJS (if configured)
         try {
             const response = await emailjs.send(
-                "service_usavslg",
+                "service_my32q89",
                 "template_9my0zp6",
                 templateParams
             );
