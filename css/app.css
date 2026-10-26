@@ -49,6 +49,8 @@ input[type=file]{padding:.55rem}
 .auth-card h1{font-size:2rem;margin-bottom:.35rem}
 .auth-card>p{color:var(--muted);margin-bottom:1.75rem}
 .auth-links{margin-top:1.5rem;display:grid;gap:.75rem;font-size:.95rem}
+/* Register page: background image behind the form */
+
 
 /* ---------- landing ---------- */
 .site-head{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.1rem 5vw;border-bottom:1px solid var(--line);background:#fff}
