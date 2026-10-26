@@ -44,7 +44,10 @@ async function api(path, { method = 'GET', body, formData } = {}) {
   }
 
   const data = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(data.error || 'Request failed');
+  if (!res.ok) {
+    const hint = res.status >= 502 ? ' - server did not respond (restarting or crashed), please check Render logs' : '';
+    throw new Error(data.error || ('Request failed (HTTP ' + res.status + ')' + hint));
+  }
   return data;
 }
 
