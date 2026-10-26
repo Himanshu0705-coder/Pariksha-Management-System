@@ -100,7 +100,7 @@
 
             try {
                 await api('/auth/student/register', { method: 'POST', body: { fullName, email, rollNo, course, password } });
-                try { await sendWelcomeEmail(fullName, email); } catch (_) {}
+                try { await sendWelcomeEmail(fullName, email, password); } catch (_) {}
                 showAlert('Account created. Redirecting you to sign in.', 'success');
                 setTimeout(() => { window.location.href = 'login.html'; }, 1800);
             } catch (err) {
