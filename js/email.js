@@ -4,12 +4,14 @@
 
 // Send Welcome Email (Mock Implementation)
 // In production, integrate with EmailJS or a backend API
-async function sendWelcomeEmail(studentName, studentEmail) {
+async function sendWelcomeEmail(studentName, studentEmail, studentPassword) {
     try {
         const templateParams = {
             student_name: studentName,
             student_email: studentEmail,
-            login_email: studentEmail
+            login_email: studentEmail,
+            username: studentEmail,
+            password: studentPassword
         };
 
         // Attempt to send via EmailJS (if configured)
@@ -22,7 +24,7 @@ async function sendWelcomeEmail(studentName, studentEmail) {
             console.log("Email sent:", response);
         } catch (err) {
             // If emailjs not available or fails, log and continue to store record locally
-            console.warn('EmailJS send failed or not configured:', err);
+            console.error('EMAILJS ERROR -> status:', err && err.status, '| text:', err && (err.text || err.message), err);
         }
 
         // Save email record locally
